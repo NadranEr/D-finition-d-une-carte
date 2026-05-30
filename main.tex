@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 
 % --- Encodage et langue ---
 \usepackage[T1]{fontenc}
@@ -40,11 +40,11 @@
 ]{hyperref}
 
 % --- Figures et diagrammes ---
+\usepackage[final]{graphicx}   % ← move this first
+\graphicspath{{Figures/}}
 \usepackage{tikz}
 \usetikzlibrary{positioning, arrows.meta, trees}
 \usepackage{subcaption}
-\usepackage{graphicx}
-\graphicspath{{figures/}}
 
 % --- Divers ---
 \usepackage{xspace}

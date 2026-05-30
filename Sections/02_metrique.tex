@@ -1,59 +1,138 @@
-\section[Métrique locale, métrique globale]{La découverte centrale~--- métrique locale contre métrique globale}
+\section{Métrique locale contre métrique globale}
 
-Précisons donc la nature de cet espace. Reprenons l'exemple le plus immédiat : une carte routière de France. Paris et Lyon n'y sont pas reliées par une ligne directe tracée par le cartographe. Pourtant, quiconque regarde cette carte peut estimer leur distance, déterminer leur orientation relative, et inférer qu'un trajet entre les deux passe probablement par la vallée de la Saône. Ces relations ne sont pas explicitées~--- elles sont \emph{dérivables} de la position des deux villes dans l'espace représenté. C'est précisément ce que l'organigramme de la section précédente ne permettait pas : deux agents de départements différents n'y ont aucune relation directe inférable de leur position visuelle. Pour établir une relation entre eux, il faut remonter la hiérarchie, suivre les arêtes.
+Précisons donc la nature de cet espace. Reprenons l'exemple le plus immédiat :
+une carte routière de France. Paris et Lyon n'y sont pas reliées par une ligne directe
+tracée par le cartographe. Pourtant, quiconque regarde cette carte peut estimer leur
+distance, déterminer leur orientation relative, et inférer qu'un trajet entre les
+deux passe probablement par la vallée de la Saône. Ces relations ne sont pas
+explicitées~--- elles sont \emph{dérivables} de la position des deux villes dans
+l'espace représenté. C'est précisément ce que l'organigramme de la section
+précédente ne permettait pas : deux agents de départements différents n'y ont
+aucune relation directe inférable de leur position visuelle. Pour établir une relation
+entre eux, il faut remonter la hiérarchie, suivre les arêtes.
 
-La différence n'est pas une question de densité, ni même de continuité de l'espace. C'est une question de \emph{nature de la métrique}. Dans un graphe ou un organigramme, la métrique est \textbf{locale}~: elle ne définit des relations qu'entre éléments directement connectés. Entre deux nœuds non adjacents, il n'existe aucune relation directe~--- seulement un chemin à parcourir. Dans une carte, la métrique est \textbf{globale et cohérente}~: elle assigne une relation~--- une distance, une direction, une proximité~--- à \emph{n'importe quelle paire d'éléments}, qu'ils soient explicitement connectés ou non. (figure~\ref{fig:metrique_locale_globale})
+La différence n'est pas une question de densité, ni même de continuité de l'espace.
+C'est une question de \emph{nature de la métrique}. Dans un graphe ou un organigramme,
+la métrique est \textbf{locale}~: elle ne définit des relations qu'entre éléments
+directement connectés. Entre deux nœuds non adjacents, il n'existe aucune relation
+directe~--- seulement un chemin à parcourir. Dans une carte, la métrique est \textbf{globale
+et cohérente}~: elle assigne une relation~--- une distance, une direction, une
+proximité~--- à \emph{n'importe quelle paire d'éléments}, qu'ils soient
+explicitement connectés ou non. (figure~\ref{fig:metrique_locale_globale})
 
 \begin{figure}[ht]
-\centering
-\begin{subfigure}[b]{0.44\textwidth}
   \centering
-  \begin{tikzpicture}[
-    every node/.style={circle, draw, fill=gray!12, minimum size=1cm, font=\small},
-    arr/.style={-{Stealth[length=2.5mm]}, semithick},
-    node distance=1.6cm
-  ]
-  \node (A) {$A$};
-  \node (B) [right=of A] {$B$};
-  \node (C) [below=of A] {$C$};
-  \node (D) [right=of C] {$D$};
-  \draw[arr] (A) -- (B);
-  \draw[arr] (A) -- (C);
-  \draw[arr] (B) -- (D);
-  \node[draw=none, fill=none, font=\footnotesize, text=gray] at ($(A)!0.5!(D)$) {?};
-  \end{tikzpicture}
-  \caption{Métrique locale (graphe)\\{\footnotesize Quelle relation entre $A$ et $D$~?}}
-\end{subfigure}
-\hfill
-\begin{subfigure}[b]{0.44\textwidth}
-  \centering
-  \begin{tikzpicture}[
-    every node/.style={circle, draw, fill=gray!12, minimum size=1cm, font=\small},
-    node distance=0pt
-  ]
-  \node (A) at (0, 0)   {$A$};
-  \node (B) at (2.4, 0.4) {$B$};
-  \node (C) at (0.4, -1.8) {$C$};
-  \node (D) at (2.8, -1.6) {$D$};
-  \draw[dashed, gray] (A) -- (B);
-  \draw[dashed, gray] (A) -- (C);
-  \draw[dashed, gray] (B) -- (D);
-  \draw[thick, black, <->] (A) -- node[above, sloped, font=\footnotesize, fill=white] {$d(A,D)$} (D);
-  \end{tikzpicture}
-  \caption{Métrique globale (carte)\\{\footnotesize $A$ et $D$ ont une distance implicite}}
-\end{subfigure}
-\caption{Dans un graphe, la relation entre deux nœuds non adjacents n'est pas définie directement~--- il faut emprunter un chemin. Dans un espace à métrique globale, tout couple d'éléments possède une relation de distance inférable de leur position, indépendamment des connexions explicites.}
-\label{fig:metrique_locale_globale}
+  % enable coordinate calculations for TikZ (used for ($(A)!0.5!(D)$))
+  \usetikzlibrary{calc}
+  \begin{subfigure}
+    [b]{0.44\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      every node/.style={circle, draw, fill=gray!12, minimum size=1cm, font=\small},
+      arr/.style={-{Stealth[length=2.5mm]}, semithick},
+      node distance=1.6cm
+    ]
+      \node (A) {$A$};
+      \node (B) [right=of A] {$B$};
+      \node (C) [below=of A] {$C$};
+      \node (D) [right=of C] {$D$};
+      \draw[arr] (A) -- (B);
+      \draw[arr] (A) -- (C);
+      \draw[arr] (B) -- (D);
+      \node[draw=none, fill=none, font=\footnotesize, text=gray]
+        at
+        ($(A)!0.5!(D)$)
+        {?};
+    \end{tikzpicture}
+    \caption{Métrique locale (graphe)\\
+    {\footnotesize Quelle relation entre $A$ et $D$~?}}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}
+    [b]{0.44\textwidth}
+    \centering
+    \begin{tikzpicture}[
+      every node/.style={circle, draw, fill=gray!12, minimum size=1cm, font=\small},
+      node distance=0pt
+    ]
+      \node (A) at (0, 0) {$A$};
+      \node (B) at (2.4, 0.4) {$B$};
+      \node (C) at (0.4, -1.8) {$C$};
+      \node (D) at (2.8, -1.6) {$D$};
+      \draw[dashed, gray] (A) -- (B);
+      \draw[dashed, gray] (A) -- (C);
+      \draw[dashed, gray] (B) -- (D);
+      \draw[thick, black, <->]
+        (A) --
+        node[above, sloped, font=\footnotesize, fill=white] {$d(A,D)$}
+        (D);
+    \end{tikzpicture}
+    \caption{Métrique globale (carte)\\
+    {\footnotesize $A$ et $D$ ont une distance implicite}}
+  \end{subfigure}
+  \caption{Dans un graphe, la relation entre deux nœuds non adjacents n'est pas définie
+  directement~--- il faut emprunter un chemin. Dans un espace à métrique globale,
+  tout couple d'éléments possède une relation de distance inférable de leur position,
+  indépendamment des connexions explicites.}
+  \label{fig:metrique_locale_globale}
 \end{figure}
 
-Ce critère s'étend naturellement aux cartes abstraites. Prenons le plan de métro parisien, dont la géographie est notablement déformée par rapport à la réalité urbaine. La distance entre deux stations y est encodée non pas en kilomètres, mais en nombre d'arrêts. Cette métrique est discrète~--- mais elle est \emph{globalement cohérente}~: entre deux stations quelconques, même sans connexion directe, le voyageur peut estimer le nombre d'arrêts nécessaires en lisant le plan. La position relative des stations encode une information dérivable sans avoir à suivre chaque arête explicitement.
+Ce critère s'étend naturellement aux cartes abstraites. Prenons le plan de métro
+parisien, dont la géographie est notablement déformée par rapport à la réalité urbaine.
+La distance entre deux stations y est encodée non pas en kilomètres, mais en nombre
+d'arrêts. Cette métrique est discrète~--- mais elle est \emph{globalement
+cohérente}~: entre deux stations quelconques, même sans connexion directe, le voyageur
+peut estimer le nombre d'arrêts nécessaires en lisant le plan. La position
+relative des stations encode une information dérivable sans avoir à suivre
+chaque arête explicitement.
 
-La cartographie bibliométrique obéit à la même logique, avec une métrique d'une autre nature. Lorsqu'un logiciel comme VOSviewer positionne des articles scientifiques dans un espace à deux dimensions, il traduit en distance visuelle la similarité sémantique calculée par des encodeurs vectoriels. Deux articles proches dans cet espace partagent des thématiques, des vocabulaires, des références~--- même s'ils ne se citent pas mutuellement. La métrique n'est pas spatiale, elle est sémantique~; mais elle est globalement cohérente : elle s'applique à toute paire d'articles dans l'espace représenté.
+La cartographie bibliométrique obéit à la même logique, avec une métrique d'une autre
+nature. Lorsqu'un logiciel comme VOSviewer positionne des articles scientifiques
+dans un espace à deux dimensions, il traduit en distance visuelle la similarité sémantique
+calculée par des encodeurs vectoriels. Deux articles proches dans cet espace
+partagent des thématiques, des vocabulaires, des références~--- même s'ils ne se
+citent pas mutuellement. La métrique n'est pas spatiale, elle est sémantique~;
+mais elle est globalement cohérente : elle s'applique à toute paire d'articles
+dans l'espace représenté.
 
-Une carte peut, au demeurant, encoder plusieurs métriques globales cohérentes simultanément. Une carte des flux commerciaux superpose une métrique spatiale~--- les distances géographiques entre pays, dérivables de leurs positions~--- et une métrique économique~--- les volumes d'échanges, encodés dans l'épaisseur et la couleur des flux. Chacune de ces métriques est globalement cohérente indépendamment de l'autre. Cette coexistence n'est pas une complication anecdotique~: elle révèle que le créateur ne choisit pas seulement \emph{quoi réduire}, mais \emph{quelles dimensions de la réalité deviennent des métriques globalement cohérentes}. Chaque dimension encodée est une décision de conception.
+Une carte peut, au demeurant, encoder plusieurs métriques globales cohérentes
+simultanément. Une carte des flux commerciaux superpose une métrique spatiale~---
+les distances géographiques entre pays, dérivables de leurs positions~--- et une
+métrique économique~--- les volumes d'échanges, encodés dans l'épaisseur et la couleur
+des flux. Chacune de ces métriques est globalement cohérente indépendamment de l'autre.
+Cette coexistence n'est pas une complication anecdotique~: elle révèle que le créateur
+ne choisit pas seulement \emph{quoi réduire}, mais \emph{quelles dimensions de
+la réalité deviennent des métriques globalement cohérentes}. Chaque dimension encodée
+est une décision de conception.
 
-Il est instructif de pousser ce critère jusqu'au cas le plus épuré. Un planisphère vierge~--- sans frontières tracées, sans noms de villes, sans aucun contenu thématique~--- est-il une carte~? Il encode une seule métrique globale : la distance géographique entre tout couple de points, intrinsèque au système de coordonnées. On peut y dériver la position relative de n'importe quels deux emplacements. En ce sens, c'est le cas le plus pur de carte : une métrique globale cohérente sans aucun message thématique surimposé. À l'inverse, un réseau de flux commerciaux représenté sans ancrage géographique est un graphe. S'il devient une carte, c'est uniquement si l'auteur impose un arrangement dans lequel la proximité visuelle encode une relation globalement cohérente~--- économique, culturelle ou autre. L'arrangement est alors l'acte cartographique lui-même.
+Il est instructif de pousser ce critère jusqu'au cas le plus épuré. Un
+planisphère vierge~--- sans frontières tracées, sans noms de villes, sans aucun
+contenu thématique~--- est-il une carte~? Il encode une seule métrique globale :
+la distance géographique entre tout couple de points, intrinsèque au système de coordonnées.
+On peut y dériver la position relative de n'importe quels deux emplacements. En ce
+sens, c'est le cas le plus pur de carte : une métrique globale cohérente sans
+aucun message thématique surimposé. À l'inverse, un réseau de flux commerciaux
+représenté sans ancrage géographique est un graphe. S'il devient une carte, c'est
+uniquement si l'auteur impose un arrangement dans lequel la proximité visuelle
+encode une relation globalement cohérente~--- économique, culturelle ou autre. L'arrangement
+est alors l'acte cartographique lui-même.
 
-Cette distinction entre métrique locale et métrique globale n'est pas seulement une construction analytique. Elle correspond à une réalité cognitive documentée. Les neurosciences distinguent deux formes de représentation spatiale dans le cerveau~: la \emph{carte cognitive} de type euclidien, qui encode les positions absolues dans un environnement et permet le calcul de raccourcis inédits, et le \emph{graphe cognitif}, qui encode des séquences d'actions ou de lieux reliés par des chemins appris \parencite{okeefe1978}. Le premier permet d'inférer des relations entre lieux jamais directement reliés~; le second ne permet que de suivre des itinéraires connus. Ce que nous raisonnons abstraitement en distinguant carte et graphe correspond donc à deux systèmes neuronaux partiellement distincts~--- et à deux modes fondamentalement différents d'habiter mentalement un espace.
+Cette distinction entre métrique locale et métrique globale n'est pas seulement
+une construction analytique. Elle correspond à une réalité cognitive documentée.
+Les neurosciences distinguent deux formes de représentation spatiale dans le
+cerveau~: la \emph{carte cognitive} de type euclidien, qui encode les positions
+absolues dans un environnement et permet le calcul de raccourcis inédits, et le \emph{graphe
+cognitif}, qui encode des séquences d'actions ou de lieux reliés par des chemins
+appris \parencite{okeefe1978}. Le premier permet d'inférer des relations entre lieux
+jamais directement reliés~; le second ne permet que de suivre des itinéraires connus.
+Ce que nous raisonnons abstraitement en distinguant carte et graphe correspond
+donc à deux systèmes neuronaux partiellement distincts~--- et à deux modes
+fondamentalement différents d'habiter mentalement un espace.
 
-La notion d'\emph{habiter} un espace n'est pas ici métaphorique. Elle désigne une capacité cognitive précise~: se situer depuis n'importe quel point de l'espace représenté, sans position de départ imposée, et dériver des relations entre éléments que personne n'a explicitement tracées. C'est cette capacité que la carte rend possible~--- et que le graphe ne rend pas. Mais la carte n'est pas encore pleinement définie. Il manque une dimension~: l'intention de celui qui la construit, et la tension constitutive que cette intention introduit.
+La notion d'\emph{habiter} un espace n'est pas ici métaphorique. Elle désigne
+une capacité cognitive précise~: se situer depuis n'importe quel point de l'espace
+représenté, sans position de départ imposée, et dériver des relations entre
+éléments que personne n'a explicitement tracées. C'est cette capacité que la carte
+rend possible~--- et que le graphe ne rend pas. Mais la carte n'est pas encore
+pleinement définie. Il manque une dimension~: l'intention de celui qui la construit,
+et la tension constitutive que cette intention introduit.
