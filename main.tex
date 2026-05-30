@@ -1,98 +1,83 @@
-% Bibliographie — "Les cartes n'existent pas, tout est une carte"
-% Format BibTeX — compatible Overleaf / LaTeX
+\documentclass[12pt, a4paper]{article}
 
-@book{bertin1967,
-  author    = {Bertin, Jacques},
-  title     = {Sémiologie graphique : les diagrammes, les réseaux, les cartes},
-  year      = {1967},
-  publisher = {Mouton / Gauthier-Villars},
-  address   = {Paris},
-  note      = {Réédition : EHESS, 1999}
-}
+% --- Encodage et langue ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{csquotes}
 
-@book{harley2001,
-  author    = {Harley, J. B.},
-  title     = {The New Nature of Maps: Essays in the History of Cartography},
-  year      = {2001},
-  publisher = {Johns Hopkins University Press},
-  address   = {Baltimore},
-  editor    = {Laxton, Paul},
-  note      = {Introduction de J. H. Andrews}
-}
+% --- Typographie ---
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
 
-@book{wood1992,
-  author    = {Wood, Denis and Fels, John},
-  title     = {The Power of Maps},
-  year      = {1992},
-  publisher = {Guilford Press},
-  address   = {New York}
-}
+% --- Mise en page ---
+\usepackage[
+  top=3cm, bottom=3cm,
+  left=3.5cm, right=3.5cm
+]{geometry}
 
-@book{wood2010,
-  author    = {Wood, Denis},
-  title     = {Rethinking the Power of Maps},
-  year      = {2010},
-  publisher = {Guilford Press},
-  address   = {New York},
-  note      = {Avec John Fels et John Krygier}
-}
+% --- Bibliographie ---
+\usepackage[
+  backend=biber,
+  style=authoryear,
+  language=french,
+  maxcitenames=2,
+  maxbibnames=99,
+  doi=false,
+  isbn=false,
+  url=false
+]{biblatex}
+\addbibresource{bibliography.bib}
 
-@article{denil2021,
-  author  = {Denil, Mark},
-  title   = {Making Explicit What has Been Implicit: A Call for a Conceptual Theory of Cartography},
-  journal = {Cartographic Perspectives},
-  year    = {2021},
-  number  = {98},
-  doi     = {10.14714/CP98.1718},
-  note    = {Suivi d'un débat avec Matthew Edney dans les numéros suivants (2022–2024)}
-}
+% --- Liens hypertexte ---
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+]{hyperref}
 
-@article{denil2022response,
-  author  = {Denil, Mark},
-  title   = {Making Explicit the Implicit, Idealized Understanding of ``Map'' and ``Cartography'': An Anti-Universalist Response},
-  journal = {Cartographic Perspectives},
-  year    = {2022},
-  note    = {Réponse au débat ouvert par Denil (2021)}
-}
+% --- Divers ---
+\usepackage{xspace}
+\usepackage{epigraph}
+\setlength{\epigraphwidth}{0.6\textwidth}
 
-@book{korzybski1933,
-  author    = {Korzybski, Alfred},
-  title     = {Science and Sanity: An Introduction to Non-Aristotelian Systems and General Semantics},
-  year      = {1933},
-  publisher = {Institute of General Semantics},
-  address   = {Lakeville, CT},
-  note      = {5e édition : 1994. Source de la formule ``la carte n'est pas le territoire''}
-}
+% --- Métadonnées ---
+\title{Les cartes n'existent pas, tout est une carte}
+\author{Adrien Mabire}
+\date{Mai 2026}
 
-@book{wittgenstein1953,
-  author    = {Wittgenstein, Ludwig},
-  title     = {Philosophical Investigations},
-  year      = {1953},
-  publisher = {Blackwell},
-  address   = {Oxford},
-  note      = {Trad. fr. : \textit{Recherches philosophiques}, Gallimard, 2004. Notion de ressemblance de famille (\S{}66--67)}
-}
+% ============================================================
+\begin{document}
 
-% --- À compléter ---
-% Référence neurosciences cognitives : distinction carte cognitive euclidienne / graphe cognitif
-% Chercher dans : O'Keefe & Nadel (1978) The Hippocampus as a Cognitive Map
-% ou revue plus récente sur la navigation spatiale et les systèmes hippocampaux
+\maketitle
+\thispagestyle{empty}
 
-@book{okeefe1978,
-  author    = {O'Keefe, John and Nadel, Lynn},
-  title     = {The Hippocampus as a Cognitive Map},
-  year      = {1978},
-  publisher = {Clarendon Press},
-  address   = {Oxford},
-  note      = {Référence fondatrice sur la carte cognitive. Disponible en accès libre : \url{https://arannalp.ox.ac.uk/o'keefe-nadel/}}
-}
+\vspace{2em}
+\begin{abstract}
+\noindent
+Qu'est-ce qu'une carte ? La question paraît triviale — jusqu'à ce qu'on essaie d'y répondre avec précision. Cet essai propose de définir la carte non pas comme un objet, mais comme une \textit{dyade} : entre un créateur qui réduit intentionnellement un espace à une métrique globale cohérente, et un lecteur qui s'y projette librement sans position imposée. Cette formulation relie structurellement trois niveaux que la littérature traite séparément — la rhétorique (Harley, Wood), la phénoménologie de la lecture (Denil) et la cognition spatiale — et aboutit à une conclusion contre-intuitive : la cartéité est graduée et relationnelle, pas binaire.
+\end{abstract}
 
-% Bertin en anglais pour les lecteurs anglophones
-@book{bertin1983,
-  author    = {Bertin, Jacques},
-  title     = {Semiology of Graphics: Diagrams, Networks, Maps},
-  year      = {1983},
-  publisher = {University of Wisconsin Press},
-  address   = {Madison},
-  note      = {Traduction anglaise de Berg, William J.}
-}
+\vspace{2em}
+\tableofcontents
+\newpage
+
+% --- Sections ---
+\input{Sections/prologue}
+\input{Sections/01_probleme}
+\input{Sections/02_metrique}
+\input{Sections/03_message}
+\input{Sections/04_lecteur}
+\input{Sections/05_synthese}
+\input{Sections/06_tests}
+\input{Sections/07_peer_review}
+\input{Sections/08_conclusion}
+
+% --- Bibliographie ---
+\newpage
+\printbibliography[title={Références}]
+
+\end{document}
